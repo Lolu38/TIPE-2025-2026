@@ -1,0 +1,7 @@
+Voici toutes les sources de documentation:
+Chat-gpt
+https://f1tenth-gym.readthedocs.io/en/v1.0.0/api/env.html#f110_gym.envs.f110 (documentation de f1tenth et surtout f110)
+https://gymnasium.farama.org/introduction/create_custom_env/ (gymnasium documentation, surtout utilisé pour gymcar)
+https://askubuntu.com/questions/1338834/cp-cannot-stat-no-such-file-or-directory (utilisé pour copier les maps)
+https://unix.stackexchange.com/questions/172385/cp-cannot-stat-no-such-file-or-directory (de même)
+

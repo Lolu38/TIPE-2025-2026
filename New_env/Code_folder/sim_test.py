@@ -1,3 +1,5 @@
+import os
+os.environ["PYGLET_HEADLESS"] = "true"
 import gym
 import f110_gym
 import numpy as np
@@ -28,13 +30,22 @@ def main():
 
     env = gym.make(
         "f110_gym:f110-v0",
-        map="../Maps/vegas",
+        map="/mnt/c/Users/Kiketdule/Desktop/TIPE_Chiappetta_Lucas/New_env/Maps/vegas",
         map_ext=".png",
         params=params
     )
-    poses = [[0,0,0],[0,0,0]]
+    #print(env.map_path)
+    #print(env.map_ext)
+
+
+    poses = np.array([
+    [-11.6, -26.5, 0.0],   # voiture 1
+    [-11.2, -26.5, 0.0]    # voiture 2
+    ])
     poses = np.array(poses)
     obs, _, _, info = env.reset(poses = poses)
+    env.render(mode = "human_fast")
+
     done = False
 
     while not done:

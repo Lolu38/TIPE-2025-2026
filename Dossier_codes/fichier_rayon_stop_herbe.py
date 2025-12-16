@@ -31,7 +31,12 @@ GAMMA = 0.95  # importance du futur
 EPSILON = 0.3 # exploration initiale
 Q = {}  # dictionnaire des valeurs Q
 
-
+def count_lines(filename):
+    with open(filename, newline="") as f:
+        reader = csv.reader(f)
+        next(reader)  # skip header
+        line_count = sum(1 for _ in reader)
+    return line_count
 
 def discretize_state(state, precision=1): # Pour avoir plus de chances de retrouver un état déjà vu
     # Ex: precision=1 -> 0.0, 0.1, 0.2...
@@ -91,6 +96,7 @@ for episode in range(N_EPISODES):
     done = False
     total_reward = 0
     steps = 0
+    step_max = MAX_STEPS + count_lines()
 
     while not done:
         car = env.unwrapped.car
@@ -112,7 +118,7 @@ for episode in range(N_EPISODES):
         action = ACTIONS[action_id]
         obs, reward, terminated, truncated, _ = env.step(action)
         obs = obs[::4, ::4, :] # réduction de la résolution pour accélérer
-        done = terminated or truncated or steps >= MAX_STEPS
+        done = terminated or truncated or steps >= step_max
 
         car_pos = car.hull.position
         car_angle = car.hull.angle
@@ -128,14 +134,13 @@ for episode in range(N_EPISODES):
         state = new_state
         total_reward += reward
         steps += 1
-        print(f"Épisode {episode+1}, step {steps}, reward {reward:.1f}, action {action_id}", end='\r')
+        #print(f"Épisode {episode+1}, step {steps}, reward {reward:.1f}, action {action_id}", end='\r')
     EPSILON = max(0.01, EPSILON * 0.995)
 
 
 
-    if (episode+1) % 10 == 0:  # toutes les 10 runs
-        print(f"--- Épisode {episode} ---")
-        print(f"Taille de la Q-table : {len(Q)}")
+    print(f"--- Épisode {episode} ---")
+    print(f"Taille de la Q-table : {len(Q)}")
         # Affiche 3 états pris au hasard pour voir leurs valeurs
         """for s in list(Q.keys())[:3]:
             print(f"État : {s}")

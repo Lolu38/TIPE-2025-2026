@@ -5,12 +5,8 @@ import ast
 import csv, json, os
 import numpy as np
 
-
-
-
 # Pour exécuter sans ouvrir de fenêtre graphique
 os.environ["SDL_VIDEODRIVER"] = "dummy"
-
 
 # --- Paramètres ---
 N_EPISODES = 1000
